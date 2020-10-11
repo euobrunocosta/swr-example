@@ -1,20 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { useParams } from 'react-router-dom'
+import { useFetch } from '../hooks/useFetch'
 
 const EmployeeDetails = () => {
   const { id } = useParams<{ id: string }>()
-  const [data, setData] = useState<TEmployee>()
-
-  useEffect(() => {
-    const getData = async () => {
-      const response = await fetch(`http://localhost:4000/employees/${id}`)
-      if (!response) return
-      const _data = await response.json()
-      setData(_data)
-    }
-
-    getData()
-  }, [id])
+  const { data } = useFetch<TEmployee>(`http://localhost:4000/employees/${id}`)
 
   if (!data) return <p>Loading details ...</p>
   return (

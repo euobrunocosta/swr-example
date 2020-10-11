@@ -1,19 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
+import { useFetch } from '../hooks/useFetch'
 
 const EmployeesList = () => {
-  const [data, setData] = useState<TEmployee[]>()
-
-  useEffect(() => {
-    const getData = async () => {
-      const response = await fetch('http://localhost:4000/employees')
-      if (!response) return
-      const _data = await response.json()
-      setData(_data)
-    }
-
-    getData()
-  }, [])
+  const { data } = useFetch<TEmployee[]>('http://localhost:4000/employees')
 
   if (!data) return <p>Loading list ...</p>
   return (
